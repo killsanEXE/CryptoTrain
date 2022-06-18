@@ -87,6 +87,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
+builder.Services.AddScoped<IEmailService, EmailService>(s => 
+{
+    var emailSettings = builder.Configuration.GetSection("EmailSettings");
+    return new EmailService(new EmailSettings() 
+    {
+        Email = emailSettings.GetSection("Email").Value,
+        Password = emailSettings.GetSection("Password").Value,
+    });
+});
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 builder.Services.AddScoped<ITokenService, TokenService>();
 
