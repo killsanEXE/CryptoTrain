@@ -1,8 +1,24 @@
-<p>Logo</p>
-<nav>
-    <ul class="nav-links">
+<header [ngClass]="menuOpen ? 'header-dark' : 'header-light'">
+    <a routerLink="#" class="logo">Crypto Training</a>
+    <div class="nav-components">
+        <nav>
+            <ul class="nav-links">
+                <li><a routerLink="#">Home</a></li>
+                <li><a routerLink="#">Profile</a></li>
+                <li><a routerLink="#">Crypto</a></li>
+            </ul>
+        </nav>
+        <button class="about" routerLink="#">Contact</button>
+    </div>
+    <div #menuBtn [ngClass]="menuOpen ? 'open' : ''" (click)="changeMenu()" class="menu-btn">
+        <div class="menu-btn__burger"></div>
+    </div>
+</header>
+
+<div class="nav-components-expanded" [ngClass]="menuOpen ? 'expanded-visible' : 'expanded-hidden'">
+    <ul class="nav-links-expanded">
         <li><a routerLink="#">Home</a></li>
         <li><a routerLink="#">Profile</a></li>
         <li><a routerLink="#">Crypto</a></li>
     </ul>
-</nav>
+</div>

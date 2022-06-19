@@ -1,0 +1,119 @@
+li,a,button{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+}
+
+.header-light{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f6f6f6;
+    padding: 30px 5%;
+    transition: all .5s ease-in-out;
+}
+
+.header-dark{
+    background-color: black;
+    transition: all .5s ease-in-out;
+    padding: 30px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    *{
+        color: white;
+    }
+}
+
+.nav-components{
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+.nav-links{
+    list-style: none;
+
+    li{
+        display: inline-block;
+        padding: 0px 20px;
+
+        a{
+            transition: all 0.3s ease 0s;
+        }
+        
+        a:hover{
+            color: #0088A9
+        }
+    }
+}
+
+.about{
+    padding: 9px 25px;
+    background-color: rgba(0, 135, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    color: white;
+}
+
+.about:hover{
+    background-color: rgba(0, 135, 169, .8);
+    color: black;
+}
+
+.nav-components-expanded{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-color: black;
+    height: calc(100vh - 110px);
+}
+
+.nav-links-expanded{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    li{
+        list-style: none;
+        padding-top: calc(calc(calc(60vh - 110px) / 3) - 10px);
+        a{
+            color: white;
+            font-size: 20px;
+            transition: all .2s ease-in-out;
+        }
+        a:hover{
+            color:rgba(0, 135, 169, .8)
+        }
+    }
+}
+
+.expanded-hidden{
+    transform: translate(100%, 0);
+    transition: all .5s ease-in-out;
+}
+
+.expanded-visible{
+    transform: translate(0, 0);
+    transition: all .5s ease-in-out;
+}
+
+@media screen and (max-width: 1000px){
+    .nav-components{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .nav-components-expanded{
+        display: none;
+    }
+}
