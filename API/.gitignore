@@ -2,3 +2,4 @@
 /.vscode
 /appsettings.json
 /bin
+/API.Tests/obj
