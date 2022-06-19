@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Entities;
-using API.Helpers;
-using API.Interfaces;
+using API.Application.Entities;
+using API.Application.Helpers;
+using API.Application.Interfaces;
 using AutoMapper;
 using FakeItEasy;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Tests
+namespace API.Tests.Tests
 {
     public class DependencyProvider
     {

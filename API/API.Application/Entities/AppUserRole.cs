@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Entities
+namespace API.Application.Entities
 {
     public class AppUserRole : IdentityUserRole<int>
     {

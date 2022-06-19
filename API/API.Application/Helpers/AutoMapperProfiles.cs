@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 
-namespace API.Helpers
+namespace API.Application.Helpers
 {
     public class AutoMapperProfiles : Profile
     {

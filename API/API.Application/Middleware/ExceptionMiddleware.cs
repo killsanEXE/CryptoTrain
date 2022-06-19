@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace API.Middleware
+namespace API.Application.Middleware
 {
     public class ExceptionMiddleware
     {

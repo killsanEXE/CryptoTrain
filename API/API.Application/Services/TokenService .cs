@@ -5,12 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using API.Entities;
-using API.Interfaces;
+using API.Application.Entities;
+using API.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace API.Services
+namespace API.Application.Services
 {
     public class TokenService : ITokenService
     {

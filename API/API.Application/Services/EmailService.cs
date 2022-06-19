@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Helpers;
-using API.Interfaces;
+using API.Application.Helpers;
+using API.Application.Interfaces;
 using MailKit.Net.Smtp;
 using MimeKit;
 
-namespace API.Services
+namespace API.Application.Services
 {
     public class EmailService : IEmailService
     {

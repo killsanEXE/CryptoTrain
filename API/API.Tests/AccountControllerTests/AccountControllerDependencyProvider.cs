@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Controllers;
+using API.Application.Controllers;
 
-namespace API.Tests.AccountControllerTests
+namespace API.Tests.Tests.AccountControllerTests
 {
     public class AccountControllerDependencyProvider : DependencyProvider
     {

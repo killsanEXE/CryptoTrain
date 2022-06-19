@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace API.Tests.AccountControllerTests
+namespace API.Tests.Tests.AccountControllerTests
 {
     [Collection("Sequential")]
     public class Login : AccountControllerDependencyProvider
