@@ -1,0 +1,33 @@
+.login-form{
+    *{
+        margin-top: 20px;
+    }
+    display: flex;
+    flex-direction: column;
+    button{
+        width: 100px;
+        margin: 0 auto;
+        margin-top: 30px;
+        font-size: 20px;
+        border: 0;
+        transition: all .5s ease-in-out;
+        padding: 10px 5px;
+        color: white;
+        background-color: #0087a9;
+        border-radius: 10px;
+    }
+    button:hover{
+        cursor: pointer;
+        color: black;
+        background-color: rgba(0, 135, 169, .8);
+    }
+    .disabled-button{
+        background-color: #afafaf;
+        color: #c7c7c7;
+    }
+    .disabled-button:hover{
+        cursor: not-allowed;
+        background-color: #afafaf;
+        color: #c7c7c7;
+    }
+}

@@ -16,5 +16,6 @@ export class NavComponent implements OnInit {
   }
 
   changeMenu = () => this.menuOpen ? this.menuOpen = false : this.menuOpen = true
+  closeMenu = () => this.menuOpen = false;
 
 }

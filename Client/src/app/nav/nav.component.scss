@@ -54,7 +54,7 @@ li,a,button{
     }
 }
 
-.about{
+.account{
     padding: 9px 25px;
     background-color: rgba(0, 135, 169, 1);
     border: none;
@@ -64,7 +64,7 @@ li,a,button{
     color: white;
 }
 
-.about:hover{
+.account:hover{
     background-color: rgba(0, 135, 169, .8);
     color: black;
 }
@@ -75,6 +75,8 @@ li,a,button{
     justify-content: center;
     background-color: black;
     height: calc(100vh - 110px);
+    z-index: 1;
+    position: absolute;
 }
 
 .nav-links-expanded{
