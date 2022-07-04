@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Application.Controllers;
+using Xunit.Abstractions;
 
 namespace API.Tests.Tests.AccountControllerTests
 {
@@ -12,8 +13,9 @@ namespace API.Tests.Tests.AccountControllerTests
 
         public AccountControllerDependencyProvider()
         {
-            _accountController = new AccountController(_fakeTokenService, 
-                _fakeUserManager, _fakeRoleManager, _fakeEmailService);
+            _accountController = new AccountController(_fakeTokenService.Object, 
+            _fakeUserManager.Object, _fakeEmailService.Object, 
+            _fakeSignInManager.Object, _mapper, _fakeWrapper.Object);
         }
     }
 }

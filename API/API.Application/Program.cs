@@ -54,6 +54,10 @@ builder.Services.AddIdentityCore<AppUser>(opt =>
 {
     opt.Password.RequireNonAlphanumeric = false;
     opt.SignIn.RequireConfirmedEmail = true;
+    opt.Password.RequireDigit = false;
+    opt.Password.RequiredLength = 4;
+    opt.Password.RequireUppercase = false;
+    opt.Password.RequireNonAlphanumeric = false;
 })
     .AddRoles<AppRole>()
     .AddRoleManager<RoleManager<AppRole>>()
@@ -99,6 +103,7 @@ builder.Services.AddScoped<IEmailService, EmailService>(s =>
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IWrapper, Wrapper>();
 
 var app = builder.Build();
 
@@ -109,6 +114,7 @@ using(var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
+    await Seed.SeedUsers(userManager, roleManager);
 }
 
 app.UseMiddleware<ExceptionMiddleware>();

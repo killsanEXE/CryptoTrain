@@ -6,18 +6,24 @@ using API.Application.Entities;
 using API.Application.Helpers;
 using API.Application.Interfaces;
 using AutoMapper;
-using FakeItEasy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Moq;
+using Xunit.Abstractions;
 
 namespace API.Tests.Tests
 {
     public class DependencyProvider
     {
-        protected static ITokenService _fakeTokenService = null!;
         protected static IMapper _mapper = null!;
-        protected static IEmailService _fakeEmailService = null!;
-        protected static UserManager<AppUser> _fakeUserManager = null!;
-        protected static RoleManager<AppRole> _fakeRoleManager = null!;
+
+        protected readonly Mock<ITokenService> _fakeTokenService;
+        protected readonly Mock<IEmailService> _fakeEmailService;
+        protected readonly Mock<UserManager<AppUser>> _fakeUserManager;
+        protected readonly Mock<RoleManager<AppRole>> _fakeRoleManager;
+        protected readonly Mock<SignInManager<AppUser>> _fakeSignInManager;
+        protected readonly Mock<IWrapper> _fakeWrapper;
+
         public DependencyProvider()
         {
             var mapingConfig = new MapperConfiguration(mc => 
@@ -26,18 +32,21 @@ namespace API.Tests.Tests
             });
             _mapper = mapingConfig.CreateMapper();
 
-            _fakeTokenService = A.Fake<ITokenService>();
-            _fakeEmailService = A.Fake<IEmailService>();
+            _fakeTokenService = new Mock<ITokenService>();
+            _fakeEmailService = new Mock<IEmailService>();
 
 
-            var fakeUserStore = A.Fake<IUserStore<AppUser>>();
-            _fakeUserManager = A.Fake<UserManager<AppUser>>(f => 
-                f.WithArgumentsForConstructor(() => new UserManager<AppUser>
-                (fakeUserStore, null, null, null, null, null, null, null, null)));
-            _fakeUserManager.UserValidators.Add(new UserValidator<AppUser>());
-            _fakeUserManager.PasswordValidators.Add(new PasswordValidator<AppUser>());
+            var fakeUserStore = new Mock<IUserStore<AppUser>>();           
+            _fakeUserManager = new Mock<UserManager<AppUser>>(fakeUserStore.Object, null, 
+                null, null, null, null, null, null, null);
+            var fakeRoleStore = new Mock<IRoleStore<AppRole>>();
+            _fakeRoleManager = new Mock<RoleManager<AppRole>>(fakeRoleStore.Object, null, 
+                null, null, null);
+            _fakeSignInManager = new Mock<SignInManager<AppUser>>(_fakeUserManager.Object, 
+                Mock.Of<IHttpContextAccessor>(), Mock.Of<IUserClaimsPrincipalFactory<AppUser>>(),
+                null, null, null, null);
 
-            _fakeRoleManager = A.Fake<RoleManager<AppRole>>();
+            _fakeWrapper = new Mock<IWrapper>();
         }
     }
 }

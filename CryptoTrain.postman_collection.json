@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "d1de1573-cfd3-4f7e-89ef-20b8cdd8e994",
+		"name": "CryptoTrain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19734535"
+	},
+	"item": [
+		{
+			"name": "AccountController",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const user = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Has properties\", function(){\r",
+									"    pm.expect(user).to.have.property(\"username\");\r",
+									"    pm.expect(user).to.have.property(\"token\");\r",
+									"});\r",
+									"\r",
+									"if(pm.test(\"Has properties\")){\r",
+									"    pm.globals.set(\"token\", user.token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Killsan\",\r\n    \"password\": \"pass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7230/api/account/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7230",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Killsan\",\r\n    \"name\": \"Kirill\",\r\n    \"surname\": \"Zhurov\",\r\n    \"email\": \"killsan.exe@gmail.com\",\r\n    \"password\": \"pass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7230/api/account/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7230",
+							"path": [
+								"api",
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ForgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7230/api/account/forgot-password/killsan.exe@gmail.com",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7230",
+							"path": [
+								"api",
+								"account",
+								"forgot-password",
+								"killsan.exe@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResendEmailConfirmation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7230/api/account/resend-email-confirmation/killsan.exe@gmail.com",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7230",
+							"path": [
+								"api",
+								"account",
+								"resend-email-confirmation",
+								"killsan.exe@gmail.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
