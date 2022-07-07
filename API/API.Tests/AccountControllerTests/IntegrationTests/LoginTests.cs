@@ -11,10 +11,10 @@ using Xunit.Abstractions;
 namespace API.Tests.AccountControllerTests.IntegrationTests
 {
     [Collection("Sequential")]
-    public class Login : IntegrationTestDependencyProvider
+    public class LoginTests : IntegrationTestDependencyProvider
     {
         [Fact]
-        public async Task Return401()
+        public async Task User_IsNull_Returns_Unauthorized()
         {
             LoginDTO dto = new()
             {
@@ -28,7 +28,7 @@ namespace API.Tests.AccountControllerTests.IntegrationTests
         }
 
         [Fact]
-        public async Task Return400()
+        public async Task Email_Is_Not_Confirmed_Returns_BadRequest()
         {
             LoginDTO dto = new()
             {
@@ -42,7 +42,7 @@ namespace API.Tests.AccountControllerTests.IntegrationTests
         }
 
         [Fact]
-        public async Task Return401_1()
+        public async Task Password_Is_Wrong_Returns_Unauthorized()
         {
             LoginDTO dto = new()
             {
@@ -56,7 +56,7 @@ namespace API.Tests.AccountControllerTests.IntegrationTests
         }
 
         [Fact]
-        public async Task Return200()
+        public async Task Successfully_Logged_In_Returns_UserDTO()
         {
             LoginDTO dto = new()
             {
