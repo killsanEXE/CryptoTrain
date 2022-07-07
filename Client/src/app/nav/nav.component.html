@@ -1,0 +1,27 @@
+<header [ngClass]="menuOpen ? 'header-dark' : 'header-light'">
+    <a (click)="closeMenu()" routerLink="/" class="logo">Crypto Training</a>
+    <div class="nav-components">
+        <nav>
+            <ul class="nav-links">
+                <li><a routerLink="/">Home</a></li>
+                <li><a routerLink="#">Crypto</a></li>
+            </ul>
+        </nav>
+        <button class="account" routerLink="/account">Account</button>
+    </div>
+    <div #menuBtn [ngClass]="menuOpen ? 'open' : ''" (click)="changeMenu()" class="menu-btn">
+        <div class="menu-btn__burger"></div>
+    </div>
+</header>
+
+<div class="nav-components-expanded" [ngClass]="menuOpen ? 'expanded-visible' : 'expanded-hidden'">
+    <ul class="nav-links-expanded">
+        <li><a (click)="closeMenu()" routerLink="/">Home</a></li>
+        <li><a (click)="closeMenu()" routerLink="#">Crypto</a></li>
+        <li><a (click)="closeMenu()" routerLink="/account">Account</a></li>
+    </ul>
+</div>
+
+<div class="loading-container" *ngIf="busyService.isLoading | async">
+    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+</div>

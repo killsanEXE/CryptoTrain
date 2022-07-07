@@ -1,0 +1,34 @@
+<div class="main-register-div">
+    <form [formGroup]="registerForm" (submit)="register()" class="register-form" autocomplete="off">
+        
+        <div class="input-group">
+            <app-text-input [formControl]="registerForm.controls['name']" 
+            [label]="'Name'" [type]="'text'"></app-text-input>
+
+            <app-text-input [formControl]="registerForm.controls['surname']" 
+            [label]="'Surname'" [type]="'text'"></app-text-input>
+        </div>
+
+        <div class="input-group">
+            <app-text-input [formControl]="registerForm.controls['email']" 
+            [label]="'Email'" [type]="'email'"></app-text-input>
+
+            <app-text-input [formControl]="registerForm.controls['username']" 
+            [label]="'Username'" [type]="'text'"></app-text-input>
+        </div>
+
+        <div class="input-group">
+            <app-text-input [formControl]="registerForm.controls['password']"
+            [label]="'Password'" [type]="'password'"></app-text-input>
+
+            <app-text-input [formControl]="registerForm.controls['passwordConfirm']"
+            [label]="'Confirm password'" [type]="'password'"></app-text-input>
+        </div>
+
+        <button [disabled]="!registerForm.valid" [ngClass]="registerForm.valid ? '' : 'disabled-button'" 
+        type="submit">
+            Submit
+        </button>
+    </form>
+
+</div>

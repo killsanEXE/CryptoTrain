@@ -1,0 +1,30 @@
+div{
+    align-items: center;
+    padding-top: calc(calc(calc(60vh - 110px) / 5) - 10px);
+    div{
+        width: 50%;
+        margin: 0 auto;
+        h1{
+            font-size: 3em;
+        }
+        p{
+            font-size: 1.2em;
+            padding-top: 20px;
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    div{
+        div{
+            width: 90%;
+            margin: 0 auto;
+            h1{
+                font-size: 2em;
+            }
+            p{
+                font-size: 1em;
+            }
+        }
+    }
+}
