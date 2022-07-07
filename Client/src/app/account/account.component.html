@@ -1,5 +1,5 @@
 <ng-container *ngIf="(accountService.currentUser$ | async) != null">
-    <h1>PROFILE</h1>
+    <app-profile></app-profile>
 </ng-container>
 <ng-container *ngIf="(accountService.currentUser$ | async) == null">
     <div class="account-main-div">
@@ -12,6 +12,6 @@
             </div>
         </div>
         <app-login [accountService]="accountService" *ngIf="loginTabActive"></app-login>
-        <app-register *ngIf="!loginTabActive"></app-register>
+        <app-register [accountService]="accountService" *ngIf="!loginTabActive"></app-register>
     </div>
 </ng-container>

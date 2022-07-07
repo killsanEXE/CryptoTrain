@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { BusyService } from '../_services/busy.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,7 +11,7 @@ export class NavComponent implements OnInit {
   @ViewChild("menuBtn") menuBtn: any;
   menuOpen = false;
 
-  constructor() { }
+  constructor(public busyService: BusyService) { }
 
   ngOnInit(): void {
   }

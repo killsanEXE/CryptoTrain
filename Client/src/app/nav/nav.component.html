@@ -21,3 +21,7 @@
         <li><a (click)="closeMenu()" routerLink="/account">Account</a></li>
     </ul>
 </div>
+
+<div class="loading-container" *ngIf="busyService.isLoading | async">
+    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+</div>

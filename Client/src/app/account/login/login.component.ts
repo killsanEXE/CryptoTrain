@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, Self } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   @Input() accountService: AccountService;
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -36,8 +37,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    console.log(this.loginForm.valid);
-    console.log(this.loginForm.value);
-    // this.accountService.login(this.loginForm.value);
+    this.accountService.login(this.loginForm.value).subscribe(() => {
+      this.router.navigateByUrl("/");
+    });
   }
 }

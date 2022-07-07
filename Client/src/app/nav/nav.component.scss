@@ -119,3 +119,10 @@ li,a,button{
         display: none;
     }
 }
+
+.loading-container{
+    z-index: 2;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+}
