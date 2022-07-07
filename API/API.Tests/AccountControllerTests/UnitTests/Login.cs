@@ -8,13 +8,13 @@ using API.Application.Entities;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Tests.Tests.AccountControllerTests
+namespace API.Tests.Tests.AccountControllerTests.UnitTests
 {
     [Collection("Sequential")]
     public class Login : AccountControllerDependencyProvider
     {
         [Fact]
-        public async void Return401()
+        public async Task Return401()
         {
             LoginDTO dto = new() { Username = "Username", Password = "Password" };
             AppUser? user = null!;
@@ -29,7 +29,7 @@ namespace API.Tests.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void Return400()
+        public async Task Return400()
         {
             LoginDTO dto = new() { Username = "Username", Password = "Password" };
             AppUser? user = new() { UserName = dto.Username, EmailConfirmed = false };
@@ -44,7 +44,7 @@ namespace API.Tests.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void Return401_2()
+        public async Task Return401_2()
         {
             LoginDTO dto = new() { Username = "Username", Password = "Password" };
             AppUser? user = new() { UserName = dto.Username, EmailConfirmed = true };
@@ -64,7 +64,7 @@ namespace API.Tests.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void Return200()
+        public async Task Return200()
         {
             LoginDTO dto = new() { Username = "Username", Password = "Password" };
             AppUser? user = new() { UserName = dto.Username, EmailConfirmed = true };

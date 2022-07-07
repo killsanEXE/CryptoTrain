@@ -41,6 +41,14 @@ namespace API.Application.Helpers
                     Email = "tom123@gmail.com", 
                     EmailConfirmed = true
                 },
+                new()
+                {
+                    UserName = "fam",
+                    Name = "Mate",
+                    Surname = "",
+                    Email = "goMakeMeSandwich@gmail.com",
+                    EmailConfirmed = false
+                }
             };
 
             var roles = new List<AppRole>

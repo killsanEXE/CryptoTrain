@@ -6,7 +6,7 @@ using API.Application.DTOs;
 using Xunit;
 using API.Application.Entities;
 using Microsoft.AspNetCore.Mvc;
-using API.Tests.Tests.AccountControllerTests;
+using API.Tests.Tests.AccountControllerTests.UnitTests;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Microsoft.AspNetCore.Identity;
@@ -29,7 +29,7 @@ namespace API.Tests.AccountControllerTests
         };
 
         [Fact]
-        public async void Return400()
+        public async Task Return400()
         {
 
             _fakeWrapper.Setup(f => f.UserExistsAsync(_fakeUserManager.Object, dto.Username!))
@@ -42,7 +42,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void Return400_2()
+        public async Task Return400_2()
         {
 
             List<IdentityError> errors = new()
@@ -66,7 +66,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void Return400_3()
+        public async Task Return400_3()
         {
 
             List<IdentityError> errors = new()
@@ -94,7 +94,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void Return200()
+        public async Task Return200()
         {
             Microsoft.AspNetCore.Identity.IdentityResult userManagerResult = 
                 Microsoft.AspNetCore.Identity.IdentityResult.Success;

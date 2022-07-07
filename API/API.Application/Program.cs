@@ -26,27 +26,9 @@ builder.Services.AddCors(options => {
     });
 });
 
-builder.Services.AddDbContext<ApplicationContext>(options => {    
-    string connStr;
-    if (env == "Development" || env == "Docker")
-    {
-        connStr = builder.Configuration.GetConnectionString("Default Connection");
-    }
-    else
-    {
-        var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-        connUrl = connUrl!.Replace("postgres://", string.Empty);
-        var pgUserPass = connUrl.Split("@")[0];
-        var pgHostPortDb = connUrl.Split("@")[1];
-        var pgHostPort = pgHostPortDb.Split("/")[0];
-        var pgDb = pgHostPortDb.Split("/")[1];
-        var pgUser = pgUserPass.Split(":")[0];
-        var pgPass = pgUserPass.Split(":")[1];
-        var pgHost = pgHostPort.Split(":")[0];
-        var pgPort = pgHostPort.Split(":")[1];
-
-        connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};SSL Mode=Require;TrustServerCertificate=True";
-    }
+builder.Services.AddDbContext<ApplicationContext>(options => 
+{
+    string connStr = builder.Configuration.GetConnectionString("Default Connection");
     options.UseSqlite(connStr);
 });
 
@@ -104,6 +86,7 @@ builder.Services.AddScoped<IEmailService, EmailService>(s =>
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IWrapper, Wrapper>();
+builder.Services.AddTransient<IIntegrationTestVariables, IntegrationTestVariables>();
 
 var app = builder.Build();
 
@@ -111,6 +94,9 @@ using(var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationContext>();
+    var integrationTestService = services.GetRequiredService<IIntegrationTestVariables>();
+    if(integrationTestService.CurrentlyTesting()) 
+        await context.Database.EnsureDeletedAsync();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();

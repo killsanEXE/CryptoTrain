@@ -13,7 +13,7 @@ using Xunit.Abstractions;
 
 namespace API.Tests.Tests
 {
-    public class DependencyProvider
+    public class UnitTestDependencyProvider
     {
         protected static IMapper _mapper = null!;
 
@@ -24,7 +24,7 @@ namespace API.Tests.Tests
         protected readonly Mock<SignInManager<AppUser>> _fakeSignInManager;
         protected readonly Mock<IWrapper> _fakeWrapper;
 
-        public DependencyProvider()
+        public UnitTestDependencyProvider()
         {
             var mapingConfig = new MapperConfiguration(mc => 
             {

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using API.Application.Controllers;
 using Xunit.Abstractions;
 
-namespace API.Tests.Tests.AccountControllerTests
+namespace API.Tests.Tests.AccountControllerTests.UnitTests
 {
-    public class AccountControllerDependencyProvider : DependencyProvider
+    public class AccountControllerDependencyProvider : UnitTestDependencyProvider
     {
         protected readonly AccountController _accountController = null!;
 

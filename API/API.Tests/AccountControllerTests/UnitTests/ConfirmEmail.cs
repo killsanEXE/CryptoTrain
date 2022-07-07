@@ -6,7 +6,7 @@ using API.Application.DTOs;
 using Xunit;
 using API.Application.Entities;
 using Microsoft.AspNetCore.Mvc;
-using API.Tests.Tests.AccountControllerTests;
+using API.Tests.Tests.AccountControllerTests.UnitTests;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +20,7 @@ namespace API.Tests.AccountControllerTests
         string token = "token";
 
         [Fact]
-        public async void Return400()
+        public async Task Return400()
         {
             AppUser? user = null!;
 
@@ -34,7 +34,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void Return400_2()
+        public async Task Return400_2()
         {
             AppUser user = new() { UserName = "username", EmailConfirmed = true };
 
@@ -48,7 +48,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void ReturnContent_Invalid()
+        public async Task ReturnContent_Invalid()
         {
             AppUser user = new() { UserName = "username", EmailConfirmed = false };
             Microsoft.AspNetCore.Identity.IdentityResult userManagerResult = 
@@ -66,7 +66,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async void ReturnContent_Valid()
+        public async Task ReturnContent_Valid()
         {
             AppUser user = new() { UserName = "username", EmailConfirmed = false };
             Microsoft.AspNetCore.Identity.IdentityResult userManagerResult = 
