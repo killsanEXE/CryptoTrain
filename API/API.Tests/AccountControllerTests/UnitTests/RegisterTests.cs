@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Http;
 namespace API.Tests.AccountControllerTests
 {
     [Collection("Sequential")]
-    public class Register : AccountControllerDependencyProvider
+    public class RegisterTests : AccountControllerDependencyProvider
     {
 
         readonly RegisterDTO dto = new() 
@@ -29,7 +29,7 @@ namespace API.Tests.AccountControllerTests
         };
 
         [Fact]
-        public async Task Return400()
+        public async Task User_Already_Exists_Returns_BadRequest()
         {
 
             _fakeWrapper.Setup(f => f.UserExistsAsync(_fakeUserManager.Object, dto.Username!))
@@ -42,7 +42,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async Task Return400_2()
+        public async Task Failed_To_Crate_New_User_Returns_BadRequest()
         {
 
             List<IdentityError> errors = new()
@@ -66,7 +66,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async Task Return400_3()
+        public async Task Failed_To_Add_To_Role_Returns_BadRequest()
         {
 
             List<IdentityError> errors = new()
@@ -94,7 +94,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async Task Return200()
+        public async Task Successfully_Creates_New_User_Returns_OkResult()
         {
             Microsoft.AspNetCore.Identity.IdentityResult userManagerResult = 
                 Microsoft.AspNetCore.Identity.IdentityResult.Success;

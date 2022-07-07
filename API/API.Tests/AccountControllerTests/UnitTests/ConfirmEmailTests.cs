@@ -15,12 +15,12 @@ using API.Application.Helpers;
 namespace API.Tests.AccountControllerTests
 {
     [Collection("Sequential")]
-    public class ConfirmEmail : AccountControllerDependencyProvider
+    public class ConfirmEmailTests : AccountControllerDependencyProvider
     {
         string token = "token";
 
         [Fact]
-        public async Task Return400()
+        public async Task User_Is_Null_Returns_BadRequest()
         {
             AppUser? user = null!;
 
@@ -34,7 +34,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async Task Return400_2()
+        public async Task Email_Is_Already_Confirmed_Returns_BadRequest()
         {
             AppUser user = new() { UserName = "username", EmailConfirmed = true };
 
@@ -48,7 +48,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async Task ReturnContent_Invalid()
+        public async Task Failed_To_Confirm_Email_Returns_InvalidMessage()
         {
             AppUser user = new() { UserName = "username", EmailConfirmed = false };
             Microsoft.AspNetCore.Identity.IdentityResult userManagerResult = 
@@ -66,7 +66,7 @@ namespace API.Tests.AccountControllerTests
         }
 
         [Fact]
-        public async Task ReturnContent_Valid()
+        public async Task Successfully_Confirmed_Email_Returns_ValidMessage()
         {
             AppUser user = new() { UserName = "username", EmailConfirmed = false };
             Microsoft.AspNetCore.Identity.IdentityResult userManagerResult = 
