@@ -46,7 +46,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.router.navigateByUrl("/server-error", navigationExtras)
             break;
           default:
-            this.snackBar.open("Something went wrong");
+            this.snackBar.open("Something went wrong", "Close");
             console.log(error);
             break;
         }
