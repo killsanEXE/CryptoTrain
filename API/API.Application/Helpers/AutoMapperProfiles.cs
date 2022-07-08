@@ -13,6 +13,9 @@ namespace API.Application.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<RegisterDTO, AppUser>();
+            CreateMap<AppUser, UserDTO>().ForMember(f => f.Token, opt => 
+                opt.Ignore());
+            CreateMap<Transaction, SingleTransactionDTO>();
         }
     }
 }
