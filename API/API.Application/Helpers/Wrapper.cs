@@ -1,16 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Application.Entities;
+using API.Application.Extensions;
 using API.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Application.Helpers
 {
-    public class Wrapper : IWrapper
+    public class Wrapper : IWrapper 
     {
+        public string GetUsernameViaWrapper(ClaimsPrincipal user)
+        {
+            return user.GetUsername();
+        }
+
         public string url(HttpRequest request)
         {
             return $"{request.Scheme}://{request.Host}{request.PathBase}";
