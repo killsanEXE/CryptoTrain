@@ -18,14 +18,12 @@ namespace API.Application.Controllers
     public class ClientController : BaseController
     {
         readonly IWrapper _wrapper;
-        readonly UserManager<AppUser> _userManager;
         readonly IMapper _mapper;
         readonly IUnitOfWork _unitOfWork;
-        public ClientController(IWrapper wrapper, UserManager<AppUser> userManager,
-            IMapper mapper, IUnitOfWork unitOfWork)
+
+        public ClientController(IWrapper wrapper, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _wrapper = wrapper;
-            _userManager = userManager;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
@@ -33,16 +31,34 @@ namespace API.Application.Controllers
         [HttpGet("transactions")]
         public async Task<ActionResult<TransactionsDTO>> GetTransactions()
         {
-            var user = await _userManager.Users
-                .SingleOrDefaultAsync(f => f.UserName == _wrapper.GetUsernameViaWrapper(User));
+            var result = await _unitOfWork.ClientRepository
+                .GetClientTransactionsAsync(_wrapper.GetUsernameViaWrapper(User));
 
+            if(result == null) return NotFound("This user does not exists");
+            else return Ok(new TransactionsDTO() { Transactions = result });
+        }
+
+        [HttpPut("replenish-usd")]
+        public async Task<ActionResult<UserDTO>> ReplenishUSD()
+        {
+            var user = await _unitOfWork.ClientRepository
+                .GetClientAsync(_wrapper.GetUsernameViaWrapper(User));
             if(user == null) return NotFound("This user does not exists");
-            
-            return Ok(new TransactionsDTO()
+
+            var today = DateTime.Today; 
+            var daysSinceLastReplenishment = (today - user.LastReplenishmentDate).TotalDays;
+            if(daysSinceLastReplenishment < 30)
             {
-                Transactions = await _unitOfWork.ClientRepository
-                    .GetClientTransactionsAsync(user.UserName)
-            });
+                return BadRequest($"You can replenish your bank account in {30-daysSinceLastReplenishment} day(s)");
+            }
+            else
+            {
+                user.USDAmount = user.USDAmount + 5000;
+                user.LastReplenishmentDate = today;
+                if(await _unitOfWork.Complete())
+                    return new UserDTO() { USDAmount = user.USDAmount };
+                else return BadRequest("Could not replenish your bank accound");
+            }
         }
     }
 }
