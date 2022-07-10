@@ -32,5 +32,11 @@ namespace API.Application.Data
                 .ProjectTo<SingleTransactionDTO>(_mapper.ConfigurationProvider)
                 .ToList();
         }
+
+        public async Task<AppUser> GetClientAsync(string username)
+        {
+            return (await _context.Users.SingleOrDefaultAsync(f => f.UserName == username))!;
+        }
+
     }
 }

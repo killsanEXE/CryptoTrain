@@ -13,6 +13,7 @@ namespace API.Application.Entities
         public ICollection<AppUserRole>? UserRoles { get; set; }
         public float USDAmount { get; set; }
         public float BTCAmount { get; set; }
+        public DateTime LastReplenishmentDate { get; set; }
         public ICollection<Transaction>? Transactions { get; set; }
     }
 }
