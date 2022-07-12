@@ -28,5 +28,10 @@ namespace API.Application.Helpers
             return await userManager.Users.AnyAsync(f => f.UserName == username.ToLower());
         }
 
+        public void AddPaginationHeaderViaWrapper(HttpResponse response, int currentPage, 
+            int itemsPerPage, int totalItems, int totalPages)
+        {
+            response.AddPaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
+        }
     }
 }

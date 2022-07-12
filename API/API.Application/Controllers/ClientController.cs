@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Application.DTOs;
 using API.Application.Entities;
+using API.Application.Helpers;
 using API.Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -29,13 +30,16 @@ namespace API.Application.Controllers
         }
 
         [HttpGet("transactions")]
-        public async Task<ActionResult<TransactionsDTO>> GetTransactions()
+        public async Task<ActionResult<IEnumerable<SingleTransactionDTO>>> GetTransactions(
+            [FromQuery] PaginationParams paginationParams)
         {
-            var result = await _unitOfWork.ClientRepository
-                .GetClientTransactionsAsync(_wrapper.GetUsernameViaWrapper(User));
+            var transactions = await _unitOfWork.ClientRepository
+                .GetClientTransactionsAsync(paginationParams, _wrapper
+                .GetUsernameViaWrapper(User));
 
-            if(result == null) return NotFound("This user does not exists");
-            else return Ok(new TransactionsDTO() { Transactions = result });
+            _wrapper.AddPaginationHeaderViaWrapper(Response, transactions.CurrentPage, 
+                transactions.PageSize, transactions.TotalCount, transactions.TotalPages);
+            return Ok(transactions);
         }
 
         [HttpPut("replenish-usd")]

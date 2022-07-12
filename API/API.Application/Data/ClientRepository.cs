@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Application.DTOs;
 using API.Application.Entities;
+using API.Application.Helpers;
 using API.Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -21,23 +22,21 @@ namespace API.Application.Data
             _mapper = mapper;
         }
 
-        public async Task<List<SingleTransactionDTO>> GetClientTransactionsAsync(string username)
-        {
-            var transactions = await _context.Transactions
-                .Where(f => f.User!.UserName == username)
-                .AsNoTracking()
-                .ToListAsync();
-                
-            return transactions
-                .AsQueryable()
-                .ProjectTo<SingleTransactionDTO>(_mapper.ConfigurationProvider)
-                .ToList();
-        }
-
         public async Task<AppUser> GetClientAsync(string username)
         {
             return (await _context.Users.SingleOrDefaultAsync(f => f.UserName == username))!;
         }
 
+        public async Task<PagedList<SingleTransactionDTO>> GetClientTransactionsAsync(PaginationParams paginationParams, string username)
+        {
+            var query = _context.Transactions.Where(f => f.User!.UserName == username)
+                .AsQueryable();
+            query = query.OrderBy(f => f.TransactionDate).Reverse();
+
+            return await PagedList<SingleTransactionDTO>.CreateAsync(
+                query.ProjectTo<SingleTransactionDTO>(_mapper.ConfigurationProvider).AsNoTracking(),
+                paginationParams.PageNumber, paginationParams.PageSize
+            );
+        }
     }
 }
