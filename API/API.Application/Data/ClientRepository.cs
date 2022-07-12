@@ -23,12 +23,13 @@ namespace API.Application.Data
 
         public async Task<List<SingleTransactionDTO>> GetClientTransactionsAsync(string username)
         {
-            AppUser? user = await _context.Users
-                .Include(f => f.Transactions)
-                .SingleOrDefaultAsync(f => f.UserName == username);
-            if(user == null) return null!;
-
-            return user.Transactions!.AsQueryable().AsNoTracking()
+            var transactions = await _context.Transactions
+                .Where(f => f.User!.UserName == username)
+                .AsNoTracking()
+                .ToListAsync();
+                
+            return transactions
+                .AsQueryable()
                 .ProjectTo<SingleTransactionDTO>(_mapper.ConfigurationProvider)
                 .ToList();
         }
