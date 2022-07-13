@@ -12,5 +12,7 @@ namespace API.Application.DTOs
 
         public float BTCAmount { get; set; }
         public float USDAmount { get; set; }
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
     }
 }

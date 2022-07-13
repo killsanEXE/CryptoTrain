@@ -4,4 +4,6 @@ export interface User {
     roles: string[]
     btcAmount: number
     usdAmount: number
+    name: string
+    surname: string
 }

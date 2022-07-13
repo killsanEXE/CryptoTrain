@@ -2,8 +2,10 @@
     <div class="client-info-main-div">
         <div class="client-info-div card">
             <div class="client-name-username">
-                <p class="name-p">Kirill Zhurov</p>
-                <p class="username-p">@Killsan</p>
+                <p class="name-p">
+                    {{user.name}} {{user.surname}}
+                </p>
+                <p class="username-p">@{{user.username}}</p>
             </div>
             <div class="bank-status">
                 <p class="bank-status-title">Bank status:</p>
