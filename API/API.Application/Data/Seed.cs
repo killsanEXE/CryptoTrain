@@ -65,6 +65,34 @@ namespace API.Application.Helpers
                 await userManager.AddToRoleAsync(user, "Client");
             }
 
+            
+
+            var transactions = new List<Transaction>();
+            for(int i = 0; i <= 30; i++)
+            {
+                transactions.Add(new()
+                {
+                    User = userManager.Users.SingleOrDefault(f => f.UserName == "lisa"),
+                    TransactionDate = DateTime.Today.AddDays(-i),
+                    Type = i % 2 == 0 ? "SELL" : "BUY",
+                    Amount = i,
+                    BTCPrice = 20000
+                });
+            }
+
+            AppUser killsan = new()
+            {
+                UserName = "killsan",
+                Name = "Kirill",
+                Surname = "Zhurov",
+                Email = "killsan.exe@gmail.com",
+                EmailConfirmed = true,
+                Transactions = transactions
+            };
+
+            await userManager.CreateAsync(killsan, "pass");
+            await userManager.AddToRoleAsync(killsan, "Client");
+
             var admin = new AppUser
             {
                 UserName = "admin",
