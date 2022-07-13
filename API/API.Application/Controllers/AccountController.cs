@@ -52,7 +52,9 @@ namespace API.Application.Controllers
                 Username = user.UserName,
                 Token = await _tokenService.CreateTokenAsync(user),
                 USDAmount = user.USDAmount,
-                BTCAmount = user.BTCAmount
+                BTCAmount = user.BTCAmount,
+                Name = user.Name,
+                Surname = user.Surname
             });
         }
 

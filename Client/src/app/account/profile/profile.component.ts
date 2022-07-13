@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { pipe, take } from 'rxjs';
 import { Transaction } from 'src/app/_models/transaction';
@@ -12,7 +12,7 @@ import { ClientService } from 'src/app/_services/client.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements AfterViewChecked{
+export class ProfileComponent implements OnInit{
 
   @Input() accountService: AccountService;
   transactions: Transaction[] = [];
@@ -20,12 +20,14 @@ export class ProfileComponent implements AfterViewChecked{
   @ViewChild("scrollMeMobile") scrollMeMobile: ElementRef;
   user: User;
 
-  constructor(public clientService: ClientService, private snackBar: MatSnackBar) { }
-
-  ngAfterViewChecked(): void {
-    this.loadTransactions(this.clientService.getUserParams());
+  constructor(public clientService: ClientService, private snackBar: MatSnackBar) {
   }
 
+  ngOnInit(): void {
+    this.accountService.currentUser$.pipe(take(1)).subscribe(f => this.user = f);
+    this.loadTransactions(this.clientService.getUserParams());
+  }
+  
   loadTransactions(userParams: UserParams){
     this.clientService.getTransactions(userParams).subscribe((f) => { 
       f.result.forEach(f => this.transactions.push(f));
@@ -60,7 +62,6 @@ export class ProfileComponent implements AfterViewChecked{
   }
 
   replenishUsd(){
-    this.accountService.currentUser$.pipe(take(1)).subscribe(f => this.user = f);
     this.clientService.replenishUsd().subscribe(user => {
       this.user.usdAmount = user.usdAmount;
       this.accountService.setCurrentUser(this.user);
