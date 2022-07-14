@@ -11,6 +11,7 @@ using API.Application.DTOs;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
 using API.Application.Interfaces;
+using API.Application.Helpers;
 
 namespace API.Tests
 {
@@ -20,6 +21,14 @@ namespace API.Tests
         public bool CurrentlyTesting()
         {
             return true;
+        }
+    }
+
+    public class FakeEmailService : IEmailService
+    {
+        public Task<bool> SendEmail(EmailMessage message)
+        {
+            return Task.FromResult(true);
         }
     }
 
@@ -45,6 +54,12 @@ namespace API.Tests
                         {
                             options.UseInMemoryDatabase("TestDB");
                         });
+
+                        var emailService = services   
+                            .FirstOrDefault(f => f.ServiceType == typeof(IEmailService));
+                        services.Remove(emailService!);
+
+                        services.AddScoped<IEmailService, FakeEmailService>();
                     });
                 });
             _client = appFactory.CreateClient();

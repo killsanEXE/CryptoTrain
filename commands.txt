@@ -5,3 +5,4 @@ dotnet new xunit
 
 ng new 
 
+dotnet sln .\CryptoTrain.sln add .\API\API.Application\API.Application.csproj .\API\API.Tests\API.Tests.csproj
