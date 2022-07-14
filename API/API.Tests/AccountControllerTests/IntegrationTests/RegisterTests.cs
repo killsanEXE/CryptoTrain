@@ -64,7 +64,7 @@ namespace API.Tests.AccountControllerTests.IntegrationTests
             {
                 Name = "Kirill",
                 Surname = "Zhurov",
-                Username = "Killsan",
+                Username = "Killsan1234",
                 Email = "someGmail@gmail.com",
                 Password = "pass"
             };
