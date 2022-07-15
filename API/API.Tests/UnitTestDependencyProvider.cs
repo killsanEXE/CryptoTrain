@@ -23,6 +23,7 @@ namespace API.Tests.Tests
         protected readonly Mock<RoleManager<AppRole>> _fakeRoleManager;
         protected readonly Mock<SignInManager<AppUser>> _fakeSignInManager;
         protected readonly Mock<IWrapper> _fakeWrapper;
+        protected readonly Mock<IUnitOfWork> _fakeUnitOfWork;
 
         public UnitTestDependencyProvider()
         {
@@ -47,6 +48,7 @@ namespace API.Tests.Tests
                 null, null, null, null);
 
             _fakeWrapper = new Mock<IWrapper>();
+            _fakeUnitOfWork = new Mock<IUnitOfWork>();
         }
     }
 }

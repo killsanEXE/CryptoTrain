@@ -60,7 +60,7 @@ namespace API.Application.Controllers
                 user.USDAmount = user.USDAmount + 5000;
                 user.LastReplenishmentDate = today;
                 if(await _unitOfWork.Complete())
-                    return new UserDTO() { USDAmount = user.USDAmount };
+                    return Ok(new UserDTO() { USDAmount = user.USDAmount });
                 else return BadRequest("Could not replenish your bank accound");
             }
         }
