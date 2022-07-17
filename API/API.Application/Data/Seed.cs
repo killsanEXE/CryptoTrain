@@ -23,7 +23,10 @@ namespace API.Application.Helpers
                     Name="Eliot", 
                     Surname="Anderson", 
                     Email = "eliot123@gmail.com", 
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    LastReplenishmentDate = DateTime.Today.AddDays(-30),
+                    USDAmount = 5000,
+                    BTCAmount = 0.5f
                 },
                 new() 
                 { 
@@ -31,7 +34,10 @@ namespace API.Application.Helpers
                     Name="Lisa", 
                     Surname="Money", 
                     Email = "lisa123@gmail.com", 
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    LastReplenishmentDate = DateTime.Today.AddDays(-30),
+                    USDAmount = 5000,
+                    BTCAmount = 0.5f
                 },
                 new() 
                 { 
@@ -39,7 +45,10 @@ namespace API.Application.Helpers
                     Name="Tom", 
                     Surname="Hardy", 
                     Email = "tom123@gmail.com", 
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    LastReplenishmentDate = DateTime.Today.AddDays(-30),
+                    USDAmount = 5000,
+                    BTCAmount = 0.5f
                 },
                 new()
                 {
@@ -87,7 +96,8 @@ namespace API.Application.Helpers
                 Surname = "Zhurov",
                 Email = "killsan.exe@gmail.com",
                 EmailConfirmed = true,
-                Transactions = transactions
+                Transactions = transactions,
+                LastReplenishmentDate = DateTime.Today
             };
 
             await userManager.CreateAsync(killsan, "pass");

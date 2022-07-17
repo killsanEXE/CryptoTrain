@@ -65,17 +65,17 @@ namespace API.Tests
             _client = appFactory.CreateClient();
         }
 
-        protected async Task AuthenticateAsync()
+        protected async Task AuthenticateAsync(string username)
         {
             _client.DefaultRequestHeaders.Authorization = 
-                new AuthenticationHeaderValue("Bearer", await GetTokenAsync());
+                new AuthenticationHeaderValue("Bearer", await GetTokenAsync(username));
         }
 
-        private async Task<string> GetTokenAsync()
+        private async Task<string> GetTokenAsync(string username)
         {
             var response = await _client.PostAsJsonAsync("/api/account/login", new LoginDTO
             {
-                Username = "lisa",
+                Username = username,
                 Password = "pass",
             });
 
