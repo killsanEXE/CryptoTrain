@@ -23,7 +23,10 @@ namespace API.Application.Helpers
                     Name="Eliot", 
                     Surname="Anderson", 
                     Email = "eliot123@gmail.com", 
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    LastReplenishmentDate = DateTime.Today.AddDays(-30),
+                    USDAmount = 5000,
+                    BTCAmount = 0.5f
                 },
                 new() 
                 { 
@@ -31,7 +34,10 @@ namespace API.Application.Helpers
                     Name="Lisa", 
                     Surname="Money", 
                     Email = "lisa123@gmail.com", 
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    LastReplenishmentDate = DateTime.Today.AddDays(-30),
+                    USDAmount = 5000,
+                    BTCAmount = 0.5f
                 },
                 new() 
                 { 
@@ -39,7 +45,10 @@ namespace API.Application.Helpers
                     Name="Tom", 
                     Surname="Hardy", 
                     Email = "tom123@gmail.com", 
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    LastReplenishmentDate = DateTime.Today.AddDays(-30),
+                    USDAmount = 5000,
+                    BTCAmount = 0.5f
                 },
                 new()
                 {
@@ -64,6 +73,35 @@ namespace API.Application.Helpers
                 await userManager.CreateAsync(user, "pass");
                 await userManager.AddToRoleAsync(user, "Client");
             }
+
+            
+
+            var transactions = new List<Transaction>();
+            for(int i = 0; i <= 30; i++)
+            {
+                transactions.Add(new()
+                {
+                    User = userManager.Users.SingleOrDefault(f => f.UserName == "lisa"),
+                    TransactionDate = DateTime.Today.AddDays(-i),
+                    Type = i % 2 == 0 ? "SELL" : "BUY",
+                    Amount = i,
+                    BTCPrice = 20000
+                });
+            }
+
+            AppUser killsan = new()
+            {
+                UserName = "killsan",
+                Name = "Kirill",
+                Surname = "Zhurov",
+                Email = "killsan.exe@gmail.com",
+                EmailConfirmed = true,
+                Transactions = transactions,
+                LastReplenishmentDate = DateTime.Today
+            };
+
+            await userManager.CreateAsync(killsan, "pass");
+            await userManager.AddToRoleAsync(killsan, "Client");
 
             var admin = new AppUser
             {
