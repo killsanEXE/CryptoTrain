@@ -16,7 +16,10 @@ namespace API.Application.Data
     public class ApplicationContext : IdentityDbContext<AppUser, AppRole, int,
         IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
+
+        public DbSet<Transaction> Transactions { get; set; } = null!;
         public ApplicationContext(DbContextOptions options) : base(options) { }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -31,6 +34,11 @@ namespace API.Application.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            builder.Entity<Transaction>()
+                .HasOne(f => f.User)
+                .WithMany(f => f.Transactions)
+                .HasForeignKey(f => f.UserId);
         }
     }
 }
