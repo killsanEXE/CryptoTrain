@@ -87,6 +87,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IWrapper, Wrapper>();
 builder.Services.AddTransient<IIntegrationTestVariables, IntegrationTestVariables>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

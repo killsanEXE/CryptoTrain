@@ -6,3 +6,7 @@ dotnet new xunit
 ng new 
 
 dotnet sln .\CryptoTrain.sln add .\API\API.Application\API.Application.csproj .\API\API.Tests\API.Tests.csproj
+
+GIT: 
+    git reset HEAD^
+    git push origin +HEAD:develop

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Application.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -11,5 +12,9 @@ namespace API.Application.Interfaces
     {
         Task<bool> UserExistsAsync(UserManager<AppUser> userManager, string username);
         string url(HttpRequest request);
+        string GetUsernameViaWrapper(ClaimsPrincipal user);
+
+        void AddPaginationHeaderViaWrapper(HttpResponse response, int currentPage, 
+            int itemsPerPage, int totalItems, int totalPages);
     }
 }
