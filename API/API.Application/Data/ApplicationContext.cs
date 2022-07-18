@@ -18,6 +18,7 @@ namespace API.Application.Data
     {
 
         public DbSet<Transaction> Transactions { get; set; } = null!;
+        public DbSet<BTC> BTCs { get; set; } = null!;
         public ApplicationContext(DbContextOptions options) : base(options) { }
         
         protected override void OnModelCreating(ModelBuilder builder)

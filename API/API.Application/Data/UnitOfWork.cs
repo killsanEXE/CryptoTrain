@@ -19,6 +19,8 @@ namespace API.Application.Data
 
         public IClientRepository ClientRepository => new ClientRepository(_context, _mapper);
 
+        public ICryptoRepository CryptoRepository => new CryptoRepository(_context, _mapper);
+
         public async Task<bool> Complete()
         {
             return await _context.SaveChangesAsync() > 0;
