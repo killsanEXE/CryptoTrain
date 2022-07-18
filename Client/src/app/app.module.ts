@@ -14,6 +14,7 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ProfileComponent } from './account/profile/profile.component';
+import { CryptoModule } from './_modules/crypto.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ProfileComponent } from './account/profile/profile.component';
     FormsSharedModule,
     BrowserAnimationsModule,
     ErrorModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    CryptoModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

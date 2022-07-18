@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from './account/account.component';
+import { CryptoComponent } from './crypto/crypto/crypto.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
-  {path: "account", component: AccountComponent},
+  {
+    path: "",
+    runGuardsAndResolvers: "always",
+    canActivate: [AuthGuard],
+    children: [
+      {path: "account", component: AccountComponent},
+      {path: "crypto", component: CryptoComponent}
+    ]
+  },
   {path: "server-error", component: ServerErrorComponent},
   {path: "**", component: NotFoundComponent, pathMatch: "full"}
 ];
