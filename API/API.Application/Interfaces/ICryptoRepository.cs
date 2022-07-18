@@ -8,6 +8,6 @@ namespace API.Application.Interfaces
 {
     public interface ICryptoRepository
     {
-        Task<BTC[]> GetBitcoinHistoryAsync();
+        Task<IEnumerable<BTC>> GetBitcoinHistoryAsync();
     }
 }

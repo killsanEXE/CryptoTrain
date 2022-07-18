@@ -20,10 +20,9 @@ namespace API.Application.Data
             _mapper = mapper;
         }
 
-        public async Task<BTC[]> GetBitcoinHistoryAsync()
+        public async Task<IEnumerable<BTC>> GetBitcoinHistoryAsync()
         {
-            var btcs = await _context.BTCs.ToListAsync();
-            return btcs.ToArray();
+            return await _context.BTCs.ToListAsync();
         }
     }
 }
