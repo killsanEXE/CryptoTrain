@@ -88,6 +88,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IWrapper, Wrapper>();
 builder.Services.AddTransient<IIntegrationTestVariables, IntegrationTestVariables>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddHostedService<CryptoService>();
 
 var app = builder.Build();
 

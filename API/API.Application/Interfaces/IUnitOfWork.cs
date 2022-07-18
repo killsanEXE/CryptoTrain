@@ -9,6 +9,7 @@ namespace API.Application.Interfaces
     {
         Task<bool> Complete();
         IClientRepository ClientRepository { get; }
+        ICryptoRepository CryptoRepository { get; }
         bool HasChanges();
     }
 }
