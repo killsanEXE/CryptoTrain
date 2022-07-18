@@ -1,0 +1,25 @@
+<div class="form__group field">
+    <input [formControl]="ngControl.control" type="{{type}}" class="form__field" 
+        placeholder="{{label}}" id='{{label}}' required />
+    <label for="{{label}}" class="form__label">{{label}}</label>
+</div>   
+
+<small class="error" *ngIf="ngControl.control.hasError('withSpaces')">
+    {{label}} cannot contain spaces
+</small>
+
+<small class="error" *ngIf="ngControl.control.hasError('required') && ngControl.touched">
+    {{label}} field is required
+</small>
+
+<small class="error" *ngIf="ngControl.control.hasError('isMatching') && ngControl.touched">
+    Passwords don't match
+</small>
+
+<small class="error" *ngIf="ngControl.control.hasError('minlength')">
+    {{label}} must be at least {{ngControl.control.errors.minlength["requiredLength"]}}
+</small>
+
+<small class="error" *ngIf="ngControl.control.hasError('maxlength')">
+    {{label}} must be at most {{ngControl.control.errors.maxlength["requiredLength"]}}
+</small>

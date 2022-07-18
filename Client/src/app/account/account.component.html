@@ -1,0 +1,17 @@
+<ng-container *ngIf="(accountService.currentUser$ | async) != null">
+    <app-profile [accountService]="accountService"></app-profile>
+</ng-container>
+<ng-container *ngIf="(accountService.currentUser$ | async) == null">
+    <div class="account-main-div">
+        <div class="tabs-div">
+            <div [ngClass]="loginTabActive ? 'active-tab' : ''" class="login-tab" (click)="openLogin()">
+                Login
+            </div>
+            <div [ngClass]="loginTabActive ? '' : 'active-tab'" class="register-tab" (click)="openRegister()">
+                Register
+            </div>
+        </div>
+        <app-login [accountService]="accountService" *ngIf="loginTabActive"></app-login>
+        <app-register [accountService]="accountService" *ngIf="!loginTabActive"></app-register>
+    </div>
+</ng-container>

@@ -1,0 +1,16 @@
+<div class="main-login-div">
+    <form [formGroup]="loginForm" (submit)="login()" class="login-form" autocomplete="off">
+        
+        <app-text-input [formControl]="loginForm.controls['username']" 
+        [label]="'Username'" [type]="'text'"></app-text-input>
+
+        <app-text-input [formControl]="loginForm.controls['password']"
+        [label]="'Password'" [type]="'password'"></app-text-input>
+        
+        <button [disabled]="!loginForm.valid" [ngClass]="loginForm.valid ? '' : 'disabled-button'" 
+        type="submit">
+            Submit
+        </button>
+    </form>
+
+</div>
