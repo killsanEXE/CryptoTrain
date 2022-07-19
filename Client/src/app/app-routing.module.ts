@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from './account/account.component';
-import { CryptoComponent } from './crypto/crypto/crypto.component';
+import { CryptoComponent } from './crypto/crypto.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { AuthGuard } from './_guards/auth.guard';
