@@ -5,10 +5,10 @@
     .table-head{
         padding: 5px 0;
         margin: 5px 0;
-        border-radius: 10px;
+        border-radius: 5px;
         display: flex;
         justify-content: space-between;
-        background-color: black;
+        background-color: rgba(0,0,0, .7);
         color: white;
         .table-head-cell{
             justify-content: center;
@@ -116,6 +116,7 @@
         border: 0;
         font-size: 2vh;
         color: gray;
+        background-color: transparent;
     }
 }
 
