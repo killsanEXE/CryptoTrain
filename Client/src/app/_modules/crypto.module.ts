@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { CryptoComponent } from '../crypto/crypto.component';
 
 
-
 @NgModule({
   declarations: [
     CryptoComponent
