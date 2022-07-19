@@ -6,19 +6,24 @@ li,a,button{
     color: black;
 }
 
+header{
+    position: fixed;
+    width: 100%;
+    padding: 30px 5%;
+    padding-right: 40px;
+}
+
 .header-light{
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #f6f6f6;
-    padding: 30px 5%;
     transition: all .5s ease-in-out;
 }
 
 .header-dark{
     background-color: black;
     transition: all .5s ease-in-out;
-    padding: 30px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -74,8 +79,9 @@ li,a,button{
     width: 100%;
     justify-content: center;
     background-color: black;
-    height: calc(100vh - 110px);
+    height: calc(100vh - 80px);
     z-index: 1;
+    margin-top: 80px;
     position: absolute;
 }
 
@@ -86,7 +92,7 @@ li,a,button{
     align-items: center;
     li{
         list-style: none;
-        padding-top: calc(calc(calc(60vh - 110px) / 3) - 10px);
+        padding-top: calc(calc(calc(60vh - 80px) / 3) - 10px);
         a{
             color: white;
             font-size: 20px;
@@ -111,6 +117,10 @@ li,a,button{
 @media screen and (max-width: 1000px){
     .nav-components{
         display: none;
+    }
+    header{
+        height: 80px;
+        box-shadow: 0px 1px 5px rgba(0,0,0,.4);
     }
 }
 
