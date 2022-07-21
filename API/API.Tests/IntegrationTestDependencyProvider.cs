@@ -12,18 +12,10 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
 using API.Application.Interfaces;
 using API.Application.Helpers;
+using API.Application.Services;
 
 namespace API.Tests
 {
-
-    public class IntegrationTestVariables : IIntegrationTestVariables
-    {
-        public bool CurrentlyTesting()
-        {
-            return true;
-        }
-    }
-
     public class FakeEmailService : IEmailService
     {
         public Task<bool> SendEmail(EmailMessage message)
@@ -45,11 +37,6 @@ namespace API.Tests
                     {
                         var context = services.FirstOrDefault(f => f.ServiceType == typeof(ApplicationContext));
                         services.Remove(context!);
-                        var integrationTestService = services   
-                            .FirstOrDefault(f => f.ServiceType == typeof(IIntegrationTestVariables));
-                        services.Remove(integrationTestService!);
-
-                        services.AddTransient<IIntegrationTestVariables, IntegrationTestVariables>();
                         services.AddDbContext<ApplicationContext>(options => 
                         {
                             options.UseInMemoryDatabase("TestDB");
@@ -60,6 +47,7 @@ namespace API.Tests
                         services.Remove(emailService!);
 
                         services.AddScoped<IEmailService, FakeEmailService>();
+                        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "TESTING");
                     });
                 });
             _client = appFactory.CreateClient();
