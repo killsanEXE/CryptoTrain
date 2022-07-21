@@ -12,10 +12,10 @@ const routes: Routes = [
     runGuardsAndResolvers: "always",
     canActivate: [AuthGuard],
     children: [
-      {path: "account", component: AccountComponent},
       {path: "crypto", component: CryptoComponent}
     ]
   },
+  {path: "account", component: AccountComponent},
   {path: "server-error", component: ServerErrorComponent},
   {path: "**", component: NotFoundComponent, pathMatch: "full"}
 ];

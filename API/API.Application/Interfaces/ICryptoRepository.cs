@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Application.Entities;
+using API.Application.Helpers;
 
 namespace API.Application.Interfaces
 {
     public interface ICryptoRepository
     {
-        Task<IEnumerable<BTC>> GetBitcoinHistoryAsync();
+        Task<PagedList<BTC>> GetBitcoinHistoryAsync(UserParams userParams);
     }
 }

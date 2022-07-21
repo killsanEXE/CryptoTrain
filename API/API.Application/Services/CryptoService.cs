@@ -22,7 +22,6 @@ namespace API.Application.Services
                 using(var scope = _serviceProvider.CreateScope())
                 {
                     var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-                    var btcs = await unitOfWork.CryptoRepository.GetBitcoinHistoryAsync();
                 }
                 await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             }
