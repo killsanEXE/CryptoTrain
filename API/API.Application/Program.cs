@@ -86,20 +86,23 @@ builder.Services.AddScoped<IEmailService, EmailService>(s =>
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IWrapper, Wrapper>();
-builder.Services.AddTransient<IIntegrationTestVariables, IntegrationTestVariables>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddHostedService<CryptoService>(f => 
-    new CryptoService(builder.Configuration.GetSection("CryptoCompareToken").Value, 
-    f.GetRequiredService<IServiceProvider>()));
+
+if(env != "TESTING")
+{
+    builder.Services.AddHostedService<CryptoService>(f => 
+        new CryptoService(builder.Configuration.GetSection("CryptoCompareToken").Value, 
+        f.GetRequiredService<IServiceProvider>()));
+}
 
 var app = builder.Build();
+
 
 using(var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationContext>();
-    var integrationTestService = services.GetRequiredService<IIntegrationTestVariables>();
-    if(integrationTestService.CurrentlyTesting()) 
+    if(env == "TESTING")
         await context.Database.EnsureDeletedAsync();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
