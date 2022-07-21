@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Application.Entities;
+using API.Application.Helpers;
 using API.Application.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +21,10 @@ namespace API.Application.Data
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<BTC>> GetBitcoinHistoryAsync()
+        public async Task<PagedList<BTC>> GetBitcoinHistoryAsync(UserParams userParams)
         {
-            return await _context.BTCs.ToListAsync();
+            var query = _context.BTCs.AsNoTracking().AsQueryable().OrderBy(f => f.Id);
+            return await PagedList<BTC>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
     }
 }
