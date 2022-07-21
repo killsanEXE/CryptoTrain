@@ -26,5 +26,10 @@ namespace API.Application.Data
             var query = _context.BTCs.AsNoTracking().AsQueryable().OrderBy(f => f.Id);
             return await PagedList<BTC>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
+
+        public void AddNewBTC(BTC btc)
+        {
+            _context.BTCs.Add(btc);
+        }
     }
 }
