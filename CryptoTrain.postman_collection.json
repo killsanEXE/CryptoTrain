@@ -203,6 +203,83 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "CryptoController",
+			"item": [
+				{
+					"name": "GetPrice",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD&api_key=",
+							"protocol": "https",
+							"host": [
+								"min-api",
+								"cryptocompare",
+								"com"
+							],
+							"path": [
+								"data",
+								"price"
+							],
+							"query": [
+								{
+									"key": "fsym",
+									"value": "BTC"
+								},
+								{
+									"key": "tsyms",
+									"value": "USD"
+								},
+								{
+									"key": "api_key",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBTC",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7230/api/crypto/btc?pageNumber=1&pageSize=23",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7230",
+							"path": [
+								"api",
+								"crypto",
+								"btc"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "23"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
