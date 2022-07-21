@@ -88,7 +88,9 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IWrapper, Wrapper>();
 builder.Services.AddTransient<IIntegrationTestVariables, IntegrationTestVariables>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddHostedService<CryptoService>();
+builder.Services.AddHostedService<CryptoService>(f => 
+    new CryptoService(builder.Configuration.GetSection("CryptoCompareToken").Value, 
+    f.GetRequiredService<IServiceProvider>()));
 
 var app = builder.Build();
 

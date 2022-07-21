@@ -10,5 +10,6 @@ namespace API.Application.Interfaces
     public interface ICryptoRepository
     {
         Task<PagedList<BTC>> GetBitcoinHistoryAsync(UserParams userParams);
+        void AddNewBTC(BTC btc);
     }
 }
