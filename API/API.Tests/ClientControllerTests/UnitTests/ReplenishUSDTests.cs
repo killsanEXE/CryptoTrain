@@ -15,6 +15,7 @@ using System.Security.Claims;
 
 namespace API.Tests.ClientControllerTests.UnitTests
 {
+    [Collection("Sequential")]
     public class ReplenishUSDTests : ClientControllerDependencyProvider
     {
         [Fact]
