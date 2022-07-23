@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+var tokenKey = env == "TESTING" ? "super_strong_token_key" : 
+    builder.Configuration.GetValue<string>("TokenKey");
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -28,8 +30,14 @@ builder.Services.AddCors(options => {
 
 builder.Services.AddDbContext<ApplicationContext>(options => 
 {
-    string connStr = builder.Configuration.GetConnectionString("Default Connection");
-    options.UseSqlite(connStr);
+    if(env != "TESTING")
+    {
+        string connStr = builder.Configuration.GetConnectionString("Default Connection");
+        options.UseSqlite(connStr);
+    }else{
+        options.UseInMemoryDatabase("TestDB");
+    }
+
 });
 
 builder.Services.AddIdentityCore<AppUser>(opt => 
@@ -53,7 +61,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,    
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("TokenKey"))),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
         ValidateIssuer = false,
         ValidateAudience = false
     };
@@ -84,7 +92,8 @@ builder.Services.AddScoped<IEmailService, EmailService>(s =>
 });
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ITokenService, TokenService>(f => 
+    new TokenService(tokenKey, f.GetRequiredService<UserManager<AppUser>>()));
 builder.Services.AddScoped<IWrapper, Wrapper>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -97,20 +106,19 @@ if(env != "TESTING")
 
 var app = builder.Build();
 
-
 using(var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationContext>();
-    if(env == "TESTING")
-        await context.Database.EnsureDeletedAsync();
+    if(env == "TESTING") await context.Database.EnsureDeletedAsync();
+    else await context.Database.MigrateAsync();
+
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
-    await context.Database.MigrateAsync();
     await Seed.SeedUsers(userManager, roleManager);
 }
 
-app.UseMiddleware<ExceptionMiddleware>();
+// app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("_myAllowSpecificOrigins");
 app.UseHttpsRedirection();
 

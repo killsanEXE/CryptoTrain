@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using API.Application.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using API.Application.DTOs;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Hosting;
 using API.Application.Interfaces;
 using API.Application.Helpers;
 using API.Application.Services;
@@ -30,24 +25,16 @@ namespace API.Tests
 
         public IntegrationTestDependencyProvider()
         {
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "TESTING");
             var appFactory = new WebApplicationFactory<Program>()
                 .WithWebHostBuilder(builder => 
                 {
                     builder.ConfigureServices(services => 
                     {
-                        var context = services.FirstOrDefault(f => f.ServiceType == typeof(ApplicationContext));
-                        services.Remove(context!);
-                        services.AddDbContext<ApplicationContext>(options => 
-                        {
-                            options.UseInMemoryDatabase("TestDB");
-                        });
-
                         var emailService = services   
                             .FirstOrDefault(f => f.ServiceType == typeof(IEmailService));
                         services.Remove(emailService!);
-
                         services.AddScoped<IEmailService, FakeEmailService>();
-                        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "TESTING");
                     });
                 });
             _client = appFactory.CreateClient();
