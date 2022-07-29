@@ -1,0 +1,11 @@
+.chart-wrapper{
+    width: 100%;
+    height: 400px;
+    div{
+        height: 100%;
+        width: 100%;
+    }
+    .chart-area-wrapper{
+        overflow-x: scroll;
+    }
+}

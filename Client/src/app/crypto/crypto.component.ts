@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { take } from 'rxjs';
 import { CryptoModel } from 'src/app/_models/cryptoModel';
@@ -11,21 +11,23 @@ import { UserParams } from '../_models/userParams';
   templateUrl: './crypto.component.html',
   styleUrls: ['./crypto.component.scss']
 })
-export class CryptoComponent implements OnInit {
+export class CryptoComponent implements AfterViewInit {
 
   history: CryptoModel[] = [];
   data: number[] = [];
   labels: string[] = [];
   chart: Chart = null;
 
-  constructor(private cryptoService: CryptoService) { }
+  @ViewChild("mainChart", { static: false }) canvas: ElementRef<HTMLCanvasElement>;
+  @ViewChild("innerWrapper", { static: false }) innerWrapper: ElementRef<HTMLDivElement>;
 
-  ngOnInit(): void {
+  constructor(private cryptoService: CryptoService) { }
+  ngAfterViewInit(): void {
     Chart.register(...registerables);
     this.loadCryptoHistory(this.cryptoService.getUserParams());
   }
 
-  loadCryptoHistory(userParams: UserParams){
+  loadCryptoHistory(userParams: UserParams) {
     this.cryptoService.getBTCHistory(userParams).subscribe(f => {
       this.cryptoService.crypto$.pipe(take(1)).subscribe(history => {
         this.data.splice(0, this.data.length);
@@ -34,27 +36,45 @@ export class CryptoComponent implements OnInit {
           this.data.unshift(btc.price);
           this.labels.unshift(btc.date.toString().slice(0, 10));
         })
-        if(this.chart === null) this.generateChart();
-        else this.chart.update();
+
+        if (this.chart === null) { this.generateChart(); }
+        else{
+          this.innerWrapper.nativeElement.style.width = 
+            `${this.innerWrapper.nativeElement.clientWidth + 400}px`; 
+          this.chart.update();
+        } 
       });
     });
   }
 
 
   generateChart(){
-    this.chart = new Chart("myChart", {
+    this.chart = new Chart(this.canvas.nativeElement.getContext("2d"), {
       type: 'line',
       data: {
         labels: this.labels,
         datasets: [{
-          label: 'BTC Price',
+          label: "BTC Price",
           data: this.data,
-          tension: 2
+          fill: true,
         }]
       },
       options: {
+        maintainAspectRatio: false,
+        responsive: true,
         animation: false,
-        
+        scales: {
+          x: {
+            offset: false,
+            // min: 0,
+            // max: 2
+          },
+          y: {
+            position: {
+              x: 0,
+            }
+          }
+        }
       }
     });
   }
@@ -64,5 +84,5 @@ export class CryptoComponent implements OnInit {
     params.pageNumber++;
     this.cryptoService.setUserParams(params);
     this.loadCryptoHistory(params);
-  }
+    }
 }

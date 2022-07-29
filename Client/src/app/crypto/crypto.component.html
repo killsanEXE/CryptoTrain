@@ -1,5 +1,10 @@
-<div>
-    <canvas id="myChart" width="250" height="90"></canvas>
+
+<div class="chart-wrapper">
+  <div id="scroll" class="chart-area-wrapper">
+    <div #innerWrapper id="inner-wrapper" class="inner-wrapper">
+      <canvas #mainChart id="chart-test" height="20" width="1200"></canvas>
+    </div>
+  </div>
 </div>
 
 <button (click)="loadMore()">LoadMore</button>
